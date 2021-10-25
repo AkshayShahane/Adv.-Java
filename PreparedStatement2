@@ -1,0 +1,53 @@
+import java.util.*;
+import java.sql.*;
+
+public class jdbc9 
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the uname: ");
+		String uname=sc.next();
+		System.out.println("Enter the pwd: ");
+		String pwd=sc.next();
+		System.out.println("Enter the fname: ");
+		String fname=sc.next();
+		System.out.println("Enter the lname: ");
+		String lname=sc.next();
+		System.out.println("Enter the address: ");
+		sc.nextLine();
+		String address=sc.nextLine();
+		System.out.println("Enter the mailid: ");
+		String mailid=sc.next();
+		System.out.println("Enter the phno: ");
+		Long phno=sc.nextLong();
+		try
+		{
+			Connection con=DriverManager.getConnection(
+		"jdbc:oracle:thin:@localhost:1521:orcl","c##akshaySS","akshay11");
+		PreparedStatement ps=con.prepareStatement("insert into userReg38 values("
+				+ "?,?,?,?,?,?,?)");	
+		ps.setString(1, uname);
+		ps.setString(2, pwd);
+		ps.setString(3, fname);
+		ps.setString(4, lname);
+		ps.setString(5, address);
+		ps.setString(6, mailid);
+		ps.setLong(7, phno);
+		
+		int k=ps.executeUpdate();
+		if(k>0)
+		{
+			System.out.println("Record Inserted Successfully!!!");
+		}
+		else
+		{
+			System.out.println("Something Went Wrong");
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+}
