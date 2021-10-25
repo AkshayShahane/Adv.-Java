@@ -1,0 +1,43 @@
+import java.util.*;
+import java.sql.*;
+public class jdbc8
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the bcode: ");
+		String bcode=sc.next();
+		System.out.println("Enter the bname: ");
+		String bname=sc.next();
+		System.out.println("Enter the author: ");
+		String author=sc.next();
+		System.out.println("Enter the price: ");
+		int price=sc.nextInt();
+		System.out.println("Enter the qty: ");
+		int qty=sc.nextInt();
+		
+		try
+		{
+			Connection con=DriverManager.getConnection
+		("jdbc:oracle:thin:@localhost:1521:orcl","c##akshaySS","akshay11");
+			
+			PreparedStatement ps=con.prepareStatement("insert into book38 values(?,?,?,?,?)");
+			
+			ps.setString(1,bcode);
+			ps.setString(2,bname);
+			ps.setString(3,author);
+			ps.setInt(4, price);
+			ps.setInt(5,qty);
+			
+			int k=ps.executeUpdate();
+			if(k>0)
+			{
+				System.out.println("Record Inserted Successfully!!!");
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+}
