@@ -1,0 +1,77 @@
+import java.util.*;
+import java.sql.*;
+
+public class jdbc10
+{
+	public static void main(String[] args)
+	{
+		Scanner sc = new Scanner(System.in); 
+		
+		try
+		{
+			Connection con=DriverManager.getConnection
+	("jdbc:oracle:thin:@localhost:1521:orcl","c##akshaySS","akshay11");
+			System.out.println("Current_Status==>"+con.getAutoCommit());
+			con.setAutoCommit(false);
+			System.out.println("Current_Status==>"+con.getAutoCommit());
+			PreparedStatement ps1=con.prepareStatement("select * from bank38 where ac_no=?");
+			PreparedStatement ps2=con.prepareStatement("update bank38 set balance=balance+ ? where ac_no=?");
+			Savepoint sp=con.setSavepoint();
+			System.out.println("Enter the ac_no (hac_no)");
+			Long hac_no=sc.nextLong();
+			ps1.setLong(1,hac_no);
+			ResultSet rs1=ps1.executeQuery();
+			if(rs1.next())
+			{
+				float bal=rs1.getFloat(3);
+				System.out.println("Enter the ac_no (bac_no)");
+				Long bac_no=sc.nextLong();
+				ps1.setLong(1,bac_no);
+				ResultSet rs2=ps1.executeQuery();
+				if(rs2.next())
+				{
+					System.out.println("Enter the amount");
+					float amt=sc.nextFloat();
+					if(amt<=bal)
+					{
+						ps2.setFloat(1, -amt);
+						ps2.setLong(2,hac_no);
+						int k1=ps2.executeUpdate();
+						ps2.setFloat(1, amt);
+						ps2.setLong(2, bac_no);
+						int k2=ps2.executeUpdate();
+						if(k1==1 && k2==1)
+						{
+							System.out.println("Transaction Completed Successfully");
+							con.commit();
+						}
+						else
+						{
+							System.out.println("Transaction Failed!!!");
+							con.rollback(sp);
+						}
+					}
+					else
+					{
+						System.out.println("Insufficient Balance");
+					}
+				}
+				else
+				{
+					System.out.println("Bac_no is not found");
+				}
+			}
+			else
+			{
+				System.out.println("hac_no Account Not Found");
+			}
+			
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+}
+	
