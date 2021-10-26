@@ -1,0 +1,49 @@
+package Pooling.java;
+import java.util.*;
+import java.sql.*;
+public class pooling
+{
+	public String url,uName,pWord;
+	public Vector<Connection> v = new Vector<Connection> ();
+	public pooling(String url,String uName,String pWord)
+	{
+		this.url=url;
+		this.uName=uName;
+		this.pWord=pWord;
+	}
+	public void createConnection()
+	{
+		try
+		{
+			while(v.size()<5)
+			{
+				System.out.println("Pool is not-Full");
+				Connection con=DriverManager.getConnection(url,uName,pWord);
+				v.addElement(con);
+				System.out.println(con);
+			}								//end of while
+			
+			if(v.size()==5)
+			{
+				System.out.println("Pool is full...");
+			}
+			
+		}									//end of try
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}									//end of catch
+		
+	}
+	public synchronized Connection takeConnection()
+	{
+		Connection con=v.elementAt(0);
+		v.remove(0);
+		return con;
+	}
+	public synchronized void returnConnection(Connection con)
+	{
+		v.addElement(con);
+		System.out.println("Connection added back to the pool");
+	}
+}
