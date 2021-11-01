@@ -1,0 +1,21 @@
+
+/*This is the program of showing the metadata of a Databasemetadata*/
+import java.sql.*;
+public class sample 
+{
+	public static void main(String[] args)
+	{
+		try
+		{
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","c##akshaySS","akshay11");
+			DatabaseMetaData dmd=con.getMetaData();
+			System.out.println(dmd.getDriverName());
+			System.out.println(dmd.getDriverVersion());
+			System.out.println(dmd.allTablesAreSelectable());
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+}
