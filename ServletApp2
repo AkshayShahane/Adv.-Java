@@ -1,0 +1,61 @@
+input.html
+=======================================================================
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="dis" method="post">
+	
+		Username: <input type="text" name="uname"><br>
+		Mailid	: <input type="text" name="mid"><br>
+		PhoneNo : <input type="text" name="phno"><br>
+		<br>
+		<input type="Submit" value="Display">
+	</form>
+</body>
+</html>
+====================================================================
+
+demo.java
+===================================================================
+package test;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+@WebServlet("/dis")
+public class demo implements Servlet
+{
+	public void init(ServletConfig sc) throws ServletException
+	{
+		//No code
+	}
+	public void service(ServletRequest req,ServletResponse res) throws ServletException,IOException
+	{
+		PrintWriter pw=res.getWriter();
+		res.setContentType("text/html");
+		String uname = req.getParameter("uname");
+		String mid = req.getParameter("mid");
+		Long phno = Long.parseLong(req.getParameter("phno"));
+		pw.println("<br>=====User Details==========<br>");
+		pw.println("<br>UserName: "+uname);
+		pw.println("<br>MailId: "+mid);
+		pw.println("<br>PhoneNo: "+phno);
+		
+	}
+	public void destroy()
+	{
+		
+	}
+	public String getServletInfo()
+	{
+		return "Something";
+	}
+	public ServletConfig getServletConfig()
+	{
+		return this.getServletConfig();
+	}
+}
+==================================================================================================
