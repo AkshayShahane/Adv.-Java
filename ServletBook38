@@ -1,0 +1,71 @@
+index.html
+===============================================
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="pqr" method="post">
+		Book Code: <input type="text" name="bcode"><br><br>
+		Book Name: <input type="text" name="bname"><br><br>
+		Book Author: <input type="text" name="bauthor"><br><br>
+		Book Price: <input type="text" name="bprice"><br><br>
+		Book Quantity: <input type="text" name="bquantity"><br>
+		<br><br>
+		<input type="submit" value="Display Data">
+	
+	</form>
+</body>
+</html>
+===================================================================
+
+
+book.java
+=====================
+package test;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+@WebServlet("/pqr")
+
+public class book implements Servlet
+{
+	public void  init(ServletConfig sc)throws ServletException
+	{
+		
+	}
+	public void service(ServletRequest req,ServletResponse res)throws ServletException,IOException
+	{
+		PrintWriter pw=res.getWriter();
+		res.setContentType("text/html");
+		String Book_Code=req.getParameter("bcode");
+		String Book_Name=req.getParameter("bname");
+		String Book_Author=req.getParameter("bauthor");
+		float Book_Price=Float.parseFloat(req.getParameter("bprice"));
+		float Book_quantity=Float.parseFloat(req.getParameter("bquantity"));
+		pw.println("<br>======Book Details========<br>");
+		
+		pw.println("<br>Book Code:"+Book_Code);
+		pw.println("<br>Book Name:"+Book_Name);
+		pw.println("<br>Book Author:"+Book_Author);
+		pw.println("<br>Book Price:"+Book_Price);
+		pw.println("<br>Book Quantity:"+Book_quantity);
+		
+	}
+	public void destroy()
+	{
+		
+	}
+	public String getServletInfo()
+	{
+		return "";
+	}
+	public ServletConfig getServletConfig()
+	{
+		return this.getServletConfig();
+	}
+}
+===========================================================================================
