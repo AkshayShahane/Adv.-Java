@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<servlet>
+	<init-param>
+		<param-name>height</param-name>
+		<param-value>6</param-value>
+	</init-param>
+		
+			<servlet-name>ViewServlet</servlet-name>
+			<servlet-class>test.ViewServlet</servlet-class>
+		</servlet>
+				<servlet-mapping>
+					<servlet-name>ViewServlet</servlet-name>
+					<url-pattern>/view</url-pattern>
+				</servlet-mapping>
+					<welcome-file-list>
+						<welcome-file>input.html</welcome-file>
+					</welcome-file-list>
+</web-app>
